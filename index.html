@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <title>Weather API</title>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Weather API</h1>
+    </div>
+
+    <div class="main">
+
+        <div class="sidebar">
+            <div class="search">
+
+                <h2>Search</h2>
+
+                <div class="input-group mb-1">
+                    <input id="searchInput" type="text" class="form-control" placeholder="enter city" aria-label="City Search" aria-describedby="button-addon2">
+                    <div id="searchBtn" class="input-group-append">
+                      <button class="btn btn-primary" type="button" id="button-addon2">Search</button>
+                    </div>
+                </div>
+                <h3 id="searchResult">Search Result</h3>
+
+                <div id="list-group" class="list-group">
+                    <button type="button" class="list-group-item list-group-item-action">Toronto</button>
+                    <button type="button" class="list-group-item list-group-item-action">New York</button>
+                    
+                </div>
+
+            </div>
+        </div>
+
+        <div class="weather">
+            <div class="currentWeather">
+                <h2 id="cityName">Current Weather</h2>
+                <h3 id="weatherDescription">Weather Description</h3>
+                <h3 id="temperature">Temperature</h3>
+                <h3 id="humidity">Humidity</h3>
+                <h3 id="windSpeed">Wind Speed</h3>
+                <h3 id="uvIndex">UV Index</h3>
+            </div>
+
+            <div class="fiveDayForecast">
+                <h2>Five Day Forecast</h2>
+            </div>
+
+        </div>
+        
+    </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

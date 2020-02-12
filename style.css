@@ -1,0 +1,52 @@
+
+h1 {
+    color: white; 
+    font-size: 50px;
+}
+
+
+.header { 
+    background-color: grey;
+    height: 80px;
+    margin-bottom: 20px;
+    text-align: center;
+    line-height: 80px;
+    width: 100%;
+}
+
+.main {
+    width: 100%;
+}
+
+.sidebar {
+    background-color: rgb(113, 121, 101);
+    float: left;
+    width: 30%;
+    height: 500px;
+    padding: 0px;
+}
+
+.weather {
+    background-color: teal;
+    float: right;
+    width: 68%;
+    height: 500px;
+    margin-left: 2%;
+    display: flex;
+    flex-direction: column;
+  
+}
+
+.currentWeather {
+    background-color: salmon;
+    height: 300px;
+    padding: 10px;
+
+} 
+
+.fiveDayForecast {
+    background-color: seagreen;
+    height: 200px;
+    padding: 10px;
+    
+}
