@@ -10,6 +10,7 @@
 // add limit to number of buttons in search list
 // **COMPLETE  clear search input form
 // add function to not add search item to list if input value is null
+// add dates to forecast cards
 
 
 // search
@@ -58,7 +59,7 @@ function getWeatherData( city ){
 
           document.getElementById('cityName').innerText = city;
           document.getElementById('weatherDescription').innerText = description;
-          document.getElementById('temperature').innerText = "Temperature: " + temp + " degrees";
+          document.getElementById('temperature').innerText = "Temperature: " + temp + String.fromCharCode(176) + "C";
           document.getElementById('humidity').innerText = "Humidiy: " + humidity + " %";
           document.getElementById('windSpeed').innerText = "Wind Speed: " + windSpeed + " km/h";
       }); 
@@ -85,6 +86,17 @@ function getForecastData(city){
         let foreHumidity4 = response.list[27].main.humidity;
         let foreTemp5 = Math.floor((response.list[35].main.temp) - 273.15);
         let foreHumidity5 = response.list[35].main.humidity;
+
+        document.getElementById('foreTemp1').innerText = foreTemp1 + String.fromCharCode(176) + "C";
+        document.getElementById('foreHumidity1').innerText = "Humidity: " + foreHumidity1 + "%";
+        document.getElementById('foreTemp2').innerText = foreTemp2 + String.fromCharCode(176) + "C";
+        document.getElementById('foreHumidity2').innerText = "Humidity: " + foreHumidity2 + "%";
+        document.getElementById('foreTemp3').innerText = foreTemp3 + String.fromCharCode(176) + "C";
+        document.getElementById('foreHumidity3').innerText = "Humidity: " + foreHumidity3 + "%";
+        document.getElementById('foreTemp4').innerText = foreTemp4 + String.fromCharCode(176) + "C";
+        document.getElementById('foreHumidity4').innerText = "Humidity: " + foreHumidity4 + "%";
+        document.getElementById('foreTemp5').innerText = foreTemp5 + String.fromCharCode(176) + "C";
+        document.getElementById('foreHumidity5').innerText = "Humidity: " + foreHumidity5 + "%";
 
     });
 
