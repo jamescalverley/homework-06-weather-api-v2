@@ -1,3 +1,8 @@
+// remaing items
+
+
+
+
 
 // API stuff
 let apiKey = "4e033b3f0bf4413196c595a89671e437";
