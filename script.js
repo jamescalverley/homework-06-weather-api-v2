@@ -12,6 +12,7 @@
 // **COMPLETE  clear search input form
 // add function to not add search item to list if input value is null >>> use if( !city){ alert(Please enter a city name!)}
 // **COMPLETE add dates to forecast cards
+// clean up all code
 
 
 // search
@@ -72,6 +73,9 @@ function getWeatherData(city){
       }); 
 }
 
+
+
+
 // 5 day forecast
 function getForecastData(city){
     
@@ -83,41 +87,62 @@ function getForecastData(city){
     }). then(function(response){
         console.log(response);
 
+        let iconCode1 = response.list[2].weather[0].icon;
+        let foreIcon1 = `https://openweathermap.org/img/wn/${iconCode1}@2x.png`
         let foreTemp1 = Math.floor((response.list[2].main.temp) - 273.15);
         let foreHumidity1 = response.list[2].main.humidity;
         let date1 = (`${moment(response.list[2].dt_txt).format('MMM-DD/YY')}`);
+
+        let iconCode2 = response.list[10].weather[0].icon;
+        let foreIcon2 = `https://openweathermap.org/img/wn/${iconCode2}@2x.png`
         let foreTemp2 = Math.floor((response.list[10].main.temp) - 273.15);
         let foreHumidity2 = response.list[10].main.humidity;
         let date2 = (`${moment(response.list[10].dt_txt).format('MMM-DD/YY')}`);
+
+        let iconCode3 = response.list[18].weather[0].icon;
+        let foreIcon3 = `https://openweathermap.org/img/wn/${iconCode3}@2x.png`
         let foreTemp3 = Math.floor((response.list[18].main.temp) - 273.15);
         let foreHumidity3 = response.list[18].main.humidity;
         let date3 = (`${moment(response.list[18].dt_txt).format('MMM-DD/YY')}`);
+
+        let iconCode4 = response.list[26].weather[0].icon;
+        let foreIcon4 = `https://openweathermap.org/img/wn/${iconCode4}@2x.png`
         let foreTemp4 = Math.floor((response.list[26].main.temp) - 273.15);
         let foreHumidity4 = response.list[26].main.humidity;
         let date4 = (`${moment(response.list[26].dt_txt).format('MMM-DD/YY')}`);
+
+        let iconCode5 = response.list[34].weather[0].icon;
+        let foreIcon5 = `https://openweathermap.org/img/wn/${iconCode5}@2x.png`
         let foreTemp5 = Math.floor((response.list[34].main.temp) - 273.15);
         let foreHumidity5 = response.list[34].main.humidity;
         let date5 = (`${moment(response.list[34].dt_txt).format('MMM-DD/YY')}`);
 
+        document.getElementById('icon1').src = foreIcon1;
         document.getElementById('foreTemp1').innerText = foreTemp1 + String.fromCharCode(176) + "C";
         document.getElementById('foreHumidity1').innerText = "Humidity: " + foreHumidity1 + "%";
         document.getElementById('date1').innerText = date1;
+
+        document.getElementById('icon2').src = foreIcon2;
         document.getElementById('foreTemp2').innerText = foreTemp2 + String.fromCharCode(176) + "C";
         document.getElementById('foreHumidity2').innerText = "Humidity: " + foreHumidity2 + "%";
         document.getElementById('date2').innerText = date2;
+
+        document.getElementById('icon3').src = foreIcon3;
         document.getElementById('foreTemp3').innerText = foreTemp3 + String.fromCharCode(176) + "C";
         document.getElementById('foreHumidity3').innerText = "Humidity: " + foreHumidity3 + "%";
         document.getElementById('date3').innerText = date3;
+
+        document.getElementById('icon4').src = foreIcon4;
         document.getElementById('foreTemp4').innerText = foreTemp4 + String.fromCharCode(176) + "C";
         document.getElementById('foreHumidity4').innerText = "Humidity: " + foreHumidity4 + "%";
         document.getElementById('date4').innerText = date4;
+
+        document.getElementById('icon5').src = foreIcon5;
         document.getElementById('foreTemp5').innerText = foreTemp5 + String.fromCharCode(176) + "C";
         document.getElementById('foreHumidity5').innerText = "Humidity: " + foreHumidity5 + "%";
         document.getElementById('date5').innerText = date5;
 
     });
-
-
 }
 
 getForecastData();
