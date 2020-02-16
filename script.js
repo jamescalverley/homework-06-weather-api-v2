@@ -1,18 +1,21 @@
 // -------remaining items-------
 // **COMPLETE  add 5 day forecast
+// add UV index (based on color) >>> use async function
 // add search list functionality (add eventlistener to search button)
-// add search button functionality to list items 
 // localStorage / JSON / parse
-// add icons to current and forecast weather
+// **COMPLETE add icons to current weather  
+// add icons to forecast weather
 // **COMPLETE add eventlistener on enter key
 // finishing all styling
 // make responsive
 // add limit to number of buttons in search list
-// add if statement to keydown13 if input is empty
 // **COMPLETE  clear search input form
 // add function to not add search item to list if input value is null >>> use if( !city){ alert(Please enter a city name!)}
 // **COMPLETE add dates to forecast cards
 // clean up all code
+// look into github file tracking
+// if city name entered is not a real city, add a message box
+// add README file
 
 
 // search
@@ -70,7 +73,41 @@ function getWeatherData(city){
           document.getElementById('temperature').innerText = "Temperature: " + temp + String.fromCharCode(176) + "C";
           document.getElementById('humidity').innerText = "Humidiy: " + humidity + " %";
           document.getElementById('windSpeed').innerText = "Wind Speed: " + windSpeed + " km/h";
+
+
+          let coordLAT =  response.coord.lat;
+          let coordLON =  response.coord.lon;
+
+          console.log(`f(getweather) LAT= ${coordLAT} LON= ${coordLON}`);
+
+        getUVIndex(coordLAT, coordLON);
+
+
       }); 
+}
+
+function getUVIndex(coordLAT, coordLON){
+    // add query URL and input LAT and LON coords
+    // search by the coordinates provided and output the uv index
+    // write if statement that looks at the UV index and if it is in a certain range, change the color styling accordingly
+    // get coords from getWeatherData function and run the getUVIndex from withing
+    // async functions
+    
+    let queryURL = `https://api.openweathermap.org/data/2.5/uvi?appid=${apiKey}&lat=${coordLAT}&lon=${coordLON}`
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+    }).then(function(response){
+        console.log(response);
+        
+        let uvIndex = response.value;
+        document.getElementById('uvIndex').innerText = "UV Index: " +  uvIndex;
+        
+    });
+
+
+
+
 }
 
 
