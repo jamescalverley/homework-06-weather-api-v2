@@ -1,10 +1,10 @@
 // -------remaining items-------
 // **COMPLETE  add 5 day forecast
-// add UV index (based on color) >>> use async function
+// **COMPLETE add UV index (based on color) >>> use async function
 // add search list functionality (add eventlistener to search button)
 // localStorage / JSON / parse
 // **COMPLETE add icons to current weather  
-// add icons to forecast weather
+// ** COMPLETE add icons to forecast weather
 // **COMPLETE add eventlistener on enter key
 // finishing all styling
 // make responsive
@@ -16,6 +16,7 @@
 // look into github file tracking
 // if city name entered is not a real city, add a message box
 // add README file
+// try setout to see how the timing of the functions works
 
 
 // search
@@ -23,36 +24,8 @@ let apiKey = "4e033b3f0bf4413196c595a89671e437";
 let searchCities = ["london", "seattle"];
 let city = "";
 
-document.getElementById('searchBtn').addEventListener('click', searchBar);
-document.addEventListener('keydown', event => {
-    if( event.keyCode === 13){
-        searchBar();
-    }
-}
-);
-
-// needs something to put city value into the api call
-document.getElementById('list-group').addEventListener('click', getWeatherData);
-
-function searchBar(){
-    city = document.getElementById('searchInput').value;
-    document.getElementById('searchInput').value = "";
-    console.log(` search input: ${city}`)
-    searchCities.unshift(city);
-    console.log(`added to array: ${searchCities}`)
-    // add search result to list
-    let node = document.createElement('BUTTON');
-    node.classList.add("list-group-item");
-    node.classList.add("list-group-item-action");
-    let textNode = document.createTextNode(city);node.appendChild(textNode);
-    document.getElementById('list-group').appendChild(node);
-    // run current weather function
-    getWeatherData(city);
-    getForecastData(city);
-};
-
 // current weather
-function getWeatherData(city){
+async function getWeatherData(city){
     let queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
     console.log(queryURL);
     $.ajax({
@@ -81,12 +54,11 @@ function getWeatherData(city){
           console.log(`f(getweather) LAT= ${coordLAT} LON= ${coordLON}`);
 
         getUVIndex(coordLAT, coordLON);
-
-
+        getForecastData(city);
       }); 
 }
-
-function getUVIndex(coordLAT, coordLON){
+// uv index
+async function getUVIndex(coordLAT, coordLON){
     // add query URL and input LAT and LON coords
     // search by the coordinates provided and output the uv index
     // write if statement that looks at the UV index and if it is in a certain range, change the color styling accordingly
@@ -99,22 +71,23 @@ function getUVIndex(coordLAT, coordLON){
         method: "GET"
     }).then(function(response){
         console.log(response);
-        
+        console.log(`f(uvIndex) LAT= ${coordLAT} LON= ${coordLON}`);
         let uvIndex = response.value;
-        document.getElementById('uvIndex').innerText = "UV Index: " +  uvIndex;
-        
+        console.log(`UV INDEX: ${uvIndex}`)
+
+        document.getElementById('uvIndexValue').innerText = uvIndex;
+        if(uvIndex <= 3){
+            document.getElementById('uvIndexValue').className = "badge badge-success";
+        }if(uvIndex > 3 && uvIndex <= 7){
+            document.getElementById('uvIndexValue').className = "badge badge-warning";
+        }if(uvIndex > 7){
+            document.getElementById('uvIndexValue').className = "badge badge-danger";
+        }
     });
-
-
-
-
 }
 
-
-
-
 // 5 day forecast
-function getForecastData(city){
+async function getForecastData(city){
     
     let queryURL = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}`; 
     console.log(queryURL);
@@ -123,6 +96,8 @@ function getForecastData(city){
         method: "GET"
     }). then(function(response){
         console.log(response);
+
+        document.getElementById('foreCityName').innerText = "Five Day Forecast - " + city;
 
         let iconCode1 = response.list[2].weather[0].icon;
         let foreIcon1 = `https://openweathermap.org/img/wn/${iconCode1}@2x.png`
@@ -181,8 +156,35 @@ function getForecastData(city){
 
     });
 }
+// search
+document.getElementById('searchBtn').addEventListener('click', searchBar);
+document.addEventListener('keydown', event => {
+    if( event.keyCode === 13){
+        searchBar();
+    }
+});
 
-getForecastData();
+async function searchBar(){
+    city = document.getElementById('searchInput').value;
+    document.getElementById('searchInput').value = "";
+    console.log(` search input: ${city}`)
+    searchCities.unshift(city);
+    console.log(`added to array: ${searchCities}`)
+    // add search result to list
+    let node = document.createElement('BUTTON');
+    node.classList.add("list-group-item");
+    node.classList.add("list-group-item-action");
+    let textNode = document.createTextNode(city);node.appendChild(textNode);
+    document.getElementById('list-group').appendChild(node);
+    // run current weather function
+    getWeatherData(city);
+    getForecastData(city);
+    
+};
+
+
+
+
 
 
 

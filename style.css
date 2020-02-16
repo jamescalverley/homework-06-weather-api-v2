@@ -60,3 +60,7 @@ h1 {
 .card-img-top{
     padding: 30px;
 } 
+
+.badge-secondary{
+    background-color: hotpink;
+}
