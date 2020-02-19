@@ -21,25 +21,24 @@
 
 // search
 let apiKey = "4e033b3f0bf4413196c595a89671e437";
-let searchCities = ["london", "seattle"];
+let searchCities = [];
 let city = "";
+
+init();
 
 // current weather
 async function getWeatherData(city){
     let queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
-    console.log(queryURL);
     $.ajax({
         url: queryURL,
         method: "GET"
       }).then(function(response){
-          console.log(response);
 
           let city = response.name;
           let description = response.weather[0].description;
           let temp = Math.floor((response.main.temp) - 273.15);
           let humidity = response.main.humidity;
           let windSpeed = response.wind.speed;
-          let uvLon = "";
 
           document.getElementById('cityName').innerText = city;
           document.getElementById('weatherDescription').innerText = description;
@@ -47,11 +46,8 @@ async function getWeatherData(city){
           document.getElementById('humidity').innerText = "Humidiy: " + humidity + " %";
           document.getElementById('windSpeed').innerText = "Wind Speed: " + windSpeed + " km/h";
 
-
           let coordLAT =  response.coord.lat;
           let coordLON =  response.coord.lon;
-
-          console.log(`f(getweather) LAT= ${coordLAT} LON= ${coordLON}`);
 
         getUVIndex(coordLAT, coordLON);
         getForecastData(city);
@@ -59,21 +55,12 @@ async function getWeatherData(city){
 }
 // uv index
 async function getUVIndex(coordLAT, coordLON){
-    // add query URL and input LAT and LON coords
-    // search by the coordinates provided and output the uv index
-    // write if statement that looks at the UV index and if it is in a certain range, change the color styling accordingly
-    // get coords from getWeatherData function and run the getUVIndex from withing
-    // async functions
-    
     let queryURL = `https://api.openweathermap.org/data/2.5/uvi?appid=${apiKey}&lat=${coordLAT}&lon=${coordLON}`
     $.ajax({
         url: queryURL,
         method: "GET"
     }).then(function(response){
-        console.log(response);
-        console.log(`f(uvIndex) LAT= ${coordLAT} LON= ${coordLON}`);
         let uvIndex = response.value;
-        console.log(`UV INDEX: ${uvIndex}`)
 
         document.getElementById('uvIndexValue').innerText = uvIndex;
         if(uvIndex <= 3){
@@ -90,12 +77,10 @@ async function getUVIndex(coordLAT, coordLON){
 async function getForecastData(city){
     
     let queryURL = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}`; 
-    console.log(queryURL);
     $.ajax({
         url: queryURL,
         method: "GET"
     }). then(function(response){
-        console.log(response);
 
         document.getElementById('foreCityName').innerText = "Five Day Forecast - " + city;
 
@@ -156,41 +141,76 @@ async function getForecastData(city){
 
     });
 }
+
 // search
-document.getElementById('searchBtn').addEventListener('click', searchBar);
+document.getElementById('searchBtn').addEventListener('click', searchBar, renderCityList);
 document.addEventListener('keydown', event => {
     if( event.keyCode === 13){
         searchBar();
     }
 });
+// document.querySelector(".list-group").addEventListener('click', buttonClick);
 
 async function searchBar(){
     city = document.getElementById('searchInput').value;
+    
     document.getElementById('searchInput').value = "";
-    console.log(` search input: ${city}`)
     searchCities.unshift(city);
-    console.log(`added to array: ${searchCities}`)
-    // add search result to list
-    let node = document.createElement('BUTTON');
-    node.classList.add("list-group-item");
-    node.classList.add("list-group-item-action");
-    let textNode = document.createTextNode(city);node.appendChild(textNode);
-    document.getElementById('list-group').appendChild(node);
-    // run current weather function
+    console.log(searchCities);
+  
     getWeatherData(city);
     getForecastData(city);
-    
+    renderCityList();
+    storeCities();
 };
 
 
+function renderCityList(){
+    let searchList = document.getElementById("list-group");
+    searchList.innerHTML = "";
+
+    for(let i=0; i < searchCities.length; i++){
+        let cityItem = searchCities[i];
+
+        let li = document.createElement("li");
+        li.textContent = cityItem;
+        li.className = "list-group-item";
+        li.type = "button";        
+        li.setAttribute("data-index", i);
+        // onclick is running when the search button is clicked 
+        // li.onclick = alert("clicked");
+        searchList.appendChild(li);
+
+    }
+}
+
+function storeCities(){
+    localStorage.setItem("cities", JSON.stringify(searchCities));
+}
+
+function init(){
+    let storedCities = JSON.parse(localStorage.getItem("cities"));
+
+    if( storedCities !== null){
+        searchCities = storedCities;
+    }
+
+    renderCityList();
+}
 
 
 
 
 
+    
+    
 
 
-// UV Index
+
+
+ 
+
+
 
 
 
